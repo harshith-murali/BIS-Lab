@@ -1,67 +1,52 @@
-# University Timetable Optimization using PSO
+# BIS Lab: Nature-Inspired Optimization Programs
 
-A runnable Particle Swarm Optimization (PSO) program for the university timetable
-instance in the original Genetic Algorithm notebook. The original notebook and
-its screenshot are preserved.
+This repository contains runnable Jupyter notebooks for six optimization
+applications. Each notebook has an editable input section and saves a plot of
+its result in the repository folder.
 
-## Run
+## Programs and outputs
+
+| Application | Notebook | Plot output |
+| --- | --- | --- |
+| University timetable, genetic algorithm | `University_Timetable_GA.ipynb` | `university-timetable-ga.png` |
+| University timetable, particle swarm optimization | `University_Timetable_PSO.ipynb` | `university-timetable-pso.png` |
+| PCB routing, ant colony optimization | `PCB_Routing_ACO.ipynb` | `pcb-routing-aco.png` |
+| Intrusion feature selection, cuckoo search | `NIDS_Feature_Selection_Cuckoo_Search.ipynb` | `nids-feature-selection-cuckoo-search.png` |
+| Intrusion feature selection, grey wolf optimization | `NIDS_Feature_Selection_GWO.ipynb` | `nids-feature-selection-grey-wolf.png` |
+| Solar panel placement, parallel cellular algorithm | `Solar_Panel_Placement_PCA.ipynb` | `solar-panel-placement-pca.png` |
+
+Open a notebook in Jupyter and run its code cell. Edit the input values at the
+top of the cell to change the problem instance, algorithm settings, or random
+seed. The result is printed, displayed, and saved to the listed PNG file.
+
+## Setup
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-python3 university_timetable_pso.py
+jupyter lab
 ```
 
-The program prints the assignments and saves `output.png` beside the script.
-The image contains the timetable, constraint counts, and global-best convergence.
+The notebooks use NumPy and Matplotlib. The two intrusion detection examples
+generate a deterministic synthetic binary dataset, so they run without a data
+download. Their accuracy is a demonstration metric, not a benchmark on a real
+intrusion detection corpus. Solar irradiance is also synthetic; the placement
+notebook demonstrates the algorithm rather than modeling a specific site.
+
+The original timetable PSO script, notebook examples, and unit tests are kept
+alongside the six application notebooks.
+
+## Original timetable PSO command-line program
+
+The standalone PSO implementation remains available alongside the notebooks:
 
 ```bash
 python3 university_timetable_pso.py --particles 60 --iterations 250 --seed 42 --output output.png
 python3 -m unittest -v
 ```
 
-## Problem and objective
-
-There are six course sessions, four faculty members, two lecture rooms, one lab,
-and five timeslots across Monday, Wednesday, and Friday. Each course occurs once.
-Faculty assignments and room requirements match the original notebook.
-
-Hard constraints:
-- A faculty member cannot teach two courses in the same timeslot.
-- A room cannot hold two courses in the same timeslot.
-- Each course must use the required room type.
-
-Soft constraints minimize internal gaps in each faculty member's daily schedule
-and the squared difference between each day's class count and the target of two.
-With the supplied two-period days, the faculty-gap term is always zero; it is
-included explicitly in the objective. Student cohorts, capacities, course lengths,
-weekly repetition, and availability restrictions are outside this example.
-
-```text
-cost = 1000 * (faculty clashes + room clashes + room-type errors)
-       + faculty gaps + day imbalance
-```
-
-Clashes are counted pairwise. For this fixed instance, soft penalties are below
-1000, so hard constraints take priority. The objective is nonnegative; cost zero
-is therefore a global optimum. A nonzero result is reported as such; PSO does not
-guarantee an optimum for every seed or parameter choice.
-
-## PSO implementation
-
-1. Define one room coordinate and one timeslot coordinate for each course.
-2. Initialize 60 particles with random continuous positions and velocities.
-3. Clip and round coordinates to decode discrete timetable assignments.
-4. Evaluate each schedule and retain personal and global best positions.
-5. Update velocity using inertia, cognitive attraction, and social attraction:
-   `v = w*v + 1.7*r1*(pbest-x) + 1.7*r2*(gbest-x)`; then update `x = x+v`.
-6. Bound velocities to half each coordinate's range and clip positions to bounds.
-   Inertia decreases linearly from 0.9 to 0.4 over the iteration budget.
-7. Stop at cost zero or after 250 iterations; output the best decoded schedule.
-
-The seed controls NumPy's random generator. With seed 42 and the included defaults,
-the committed run reaches **cost 0 with zero hard violations in 3 iterations**.
-There are two classes on each day. Convergence includes initialization at iteration 0.
-
-![PSO timetable and convergence](output.png)
+It schedules six course sessions across five timeslots. The objective prioritizes
+faculty clashes, room clashes, and room type errors, then reduces faculty gaps
+and daily load imbalance. A zero score is a feasible global optimum for this
+fixed example; other seeds or parameter settings may finish with a nonzero score.
