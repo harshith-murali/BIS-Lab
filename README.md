@@ -8,16 +8,17 @@ its result in the repository folder.
 
 | Application | Notebook | Plot output |
 | --- | --- | --- |
-| University timetable, genetic algorithm | `University_Timetable_GA.ipynb` | `university-timetable-ga.png` |
-| University timetable, particle swarm optimization | `University_Timetable_PSO.ipynb` | `university-timetable-pso.png` |
-| PCB routing, ant colony optimization | `PCB_Routing_ACO.ipynb` | `pcb-routing-aco.png` |
-| Intrusion feature selection, cuckoo search | `NIDS_Feature_Selection_Cuckoo_Search.ipynb` | `nids-feature-selection-cuckoo-search.png` |
-| Intrusion feature selection, grey wolf optimization | `NIDS_Feature_Selection_GWO.ipynb` | `nids-feature-selection-grey-wolf.png` |
-| Solar panel placement, parallel cellular algorithm | `Solar_Panel_Placement_PCA.ipynb` | `solar-panel-placement-pca.png` |
+| University timetable, genetic algorithm | `University_Timetable_GA.ipynb` | `screenshots/university-timetable-ga.png` |
+| University timetable, particle swarm optimization | `University_Timetable_PSO.ipynb` | `screenshots/university-timetable-pso.png` |
+| PCB routing, ant colony optimization | `PCB_Routing_ACO.ipynb` | `screenshots/pcb-routing-aco.png` |
+| Intrusion feature selection, cuckoo search | `NIDS_Feature_Selection_Cuckoo_Search.ipynb` | `screenshots/nids-feature-selection-cuckoo-search.png` |
+| Intrusion feature selection, grey wolf optimization | `NIDS_Feature_Selection_GWO.ipynb` | `screenshots/nids-feature-selection-grey-wolf.png` |
+| Solar panel placement, parallel cellular algorithm | `Solar_Panel_Placement_PCA.ipynb` | `screenshots/solar-panel-placement-pca.png` |
 
 Open a notebook in Jupyter and run its code cell. Edit the input values at the
 top of the cell to change the problem instance, algorithm settings, or random
-seed. The result is printed, displayed, and saved to the listed PNG file.
+seed. The result is printed and displayed; the committed preview images are
+collected in `screenshots/`. Running a notebook saves a fresh PNG beside it.
 
 ## Setup
 
